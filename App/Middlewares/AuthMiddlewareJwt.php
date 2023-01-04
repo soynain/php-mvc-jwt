@@ -14,9 +14,9 @@ class AuthMiddlewareJwt
 
     public function checkAuth()
     {
-        $this->jwtHeader = array_key_exists("Bearer-token", getallheaders()) ? getallheaders()["Bearer-token"] : null;
+        $this->jwtHeader = array_key_exists("Bearer-token", getallheaders()) ? trim(getallheaders()["Bearer-token"]," ") : null;
         if ($this->objectInstance instanceof LoginController) {
-            if ($this->jwtHeader !== null) {
+            if ($this->jwtHeader !== null && !empty($this->jwtHeader)) {
                 $decodedToken = JwtDecoderComponent::decode($this->jwtHeader);
                 if ($decodedToken !== null) { //we can extend the functionality returns by getting the instance of the resultant exception in case of jwt errors
                     $response = new ResponseDto(300, "ALREADY LOGGED");
@@ -30,7 +30,7 @@ class AuthMiddlewareJwt
                 $this->next();
             }
         } else {
-            if ($this->jwtHeader !== null) {
+            if ($this->jwtHeader !== null && !empty($this->jwtHeader)) {
                 $this->next();
             } else {
                 $response = new ResponseDto(0, "");

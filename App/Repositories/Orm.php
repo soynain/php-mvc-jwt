@@ -50,9 +50,11 @@ class Orm{
     public function save($arrData){
         $stmExec="INSERT INTO {$this->table} VALUES (null,";
         foreach($arrData as $keys=>$values){
-            $stmExec.="{$keys}=:{$keys}".", ";
+            $stmExec.=":{$keys}".",";
         }
+        $stmExec=trim($stmExec,",");
         $stmExec.=")";
+        //var_dump($stmExec);
         $stm=$this->connection->prepare($stmExec);
         foreach ($arrData as $key => $value) {
             $stm->bindValue($key,$value);
