@@ -5,18 +5,13 @@ class DbConnection{
     private static $username="root";
     private static $password="211772809";
 
-    public function __construct()
-    {
-        $this->init();
-    }
-
     public static function init(){
         $opt=[
             PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
             PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION
         ];
         try {
-            DBConnection::$dsn="mysql:host=localhost;port=3306;dbname=productodphpdb";
+            DBConnection::$dsn="mysql:host=localhost;port=3306;dbname=productosphpdb";
             DbConnection::$connection=new PDO(
                 DbConnection::$dsn,
                 DbConnection::$username,
@@ -29,7 +24,9 @@ class DbConnection{
         }
     }
 
-
+    public static function getConnection(){
+        return DbConnection::$connection;
+    }
     public static function closeConn(){
         DbConnection::$connection=null;
     }
