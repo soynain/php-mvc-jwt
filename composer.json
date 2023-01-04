@@ -1,0 +1,18 @@
+{
+    "name": "gebel/crud-jwt-php",
+    "autoload": {
+        "psr-4": {
+            "Gebel\\CrudJwtPhp\\": "public/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Moises",
+            "email": "ve11621@innovaccion.mx"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.3",
+        "paragonie/sodium_compat": "^1.19"
+    }
+}
