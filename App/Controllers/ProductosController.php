@@ -33,4 +33,36 @@ class ProductosController extends Orm
         }
     }
 
+    public function updateprod(){
+        $urlPathParam=array_key_exists(3,explode("/",URL))?explode("/",URL)[3]:null;
+        //var_dump($urlPathParam);
+        if($urlPathParam!==null){
+            $contentPost = json_decode(file_get_contents("php://input"), true);
+            $this->updateById($urlPathParam,[
+                "nombreProducto" => $contentPost["nombretxt"],
+                "descripcionProducto" => $contentPost["descripciontxt"],
+                "precioProducto" => $contentPost["preciotxt"],
+                "fabricante" => $contentPost["fabricantetxt"]
+            ]);
+            $response=new ResponseDto(200,"SUCCESS");
+            $response->responseSend();
+        }else{
+            $response=new ResponseDto(400,"BAD REQUEST");
+            $response->responseSend();
+        }
+    }
+
+    public function deleteprod(){
+        $urlPathParam=array_key_exists(3,explode("/",URL))?explode("/",URL)[3]:null;
+        //var_dump($urlPathParam);
+        if($urlPathParam!==null){
+            $this->deleteById($urlPathParam);
+            $response=new ResponseDto(200,"SUCCESS");
+            $response->responseSend();
+        }else{
+            $response=new ResponseDto(400,"BAD REQUEST");
+            $response->responseSend();
+        }
+    }
+
 }

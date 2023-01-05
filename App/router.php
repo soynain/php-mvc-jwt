@@ -8,8 +8,8 @@ class Router
         "/login/auth"=>"POST",
         "/productos/get"=>"GET",
         "/productos/saveprod"=>"POST",
-        "/productos/update"=>"POST",
-        "/productos/delete"=>"POST"
+        "/productos/updateprod"=>"POST",
+        "/productos/deleteprod"=>"POST"
     ];
 
     private static function validateRouteExistence($route){
@@ -27,8 +27,15 @@ class Router
     {
         $currentMethod = $method;
         $currentUrl = $route;
-        if(Router::validateRouteExistence($currentUrl) && Router::validateRequestMethod($currentUrl,$currentMethod)){
-            $urlDefragmentation = explode("/", trim($currentUrl, " "));
+        $urlDefragmentation = explode("/", trim($currentUrl, " "));
+        /*This is for allowing have an url with more paramethers, dirty solution i think, but its for studying, not for a job
+        to have cleaner solution, i must change the router implementation almost to start with,
+        by having two methods: GET and POST, each one with the same parameters
+        as serveEndPoint() and looking for the route's existence on a route's array list
+        then encapsulate the lines of code under the if statement in a method, so
+        we dont use an if anymore and with an exception, redirect to BAD REQUEST*/
+        $verifyPrincipalUrl="/".join("/",[$urlDefragmentation[1],$urlDefragmentation[2]]);
+        if(Router::validateRouteExistence($verifyPrincipalUrl) && Router::validateRequestMethod($verifyPrincipalUrl,$currentMethod)){
             Router::$controllerName = !empty(ucwords($urlDefragmentation[1])) ? ucwords($urlDefragmentation[1])."Controller" : "AccessController";
             Router::$controlleMethodName = !empty($urlDefragmentation[2]) ? $urlDefragmentation[2] : "exception";
             require_once __DIR__ . "/Controllers/" . Router::$controllerName . ".php";
