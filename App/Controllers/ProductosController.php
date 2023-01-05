@@ -8,7 +8,7 @@ class ProductosController extends Orm
 
     public function get()
     {
-        $productsList = $this->getAll();
+        $productsList = json_encode($this->getAll());
         $response = new ResponseDto(200, $productsList);
         $response->responseSend();
     }

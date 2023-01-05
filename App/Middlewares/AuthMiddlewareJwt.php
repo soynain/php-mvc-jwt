@@ -14,7 +14,7 @@ class AuthMiddlewareJwt
 
     public function checkAuth()
     {
-        $this->jwtHeader = array_key_exists("Bearer-token", getallheaders()) ? trim(getallheaders()["Bearer-token"]," ") : null;
+        $this->jwtHeader = array_key_exists("bearer-token", getallheaders()) ? trim(getallheaders()["bearer-token"]) : null;
         if ($this->objectInstance instanceof LoginController) {
             if ($this->jwtHeader !== null && !empty($this->jwtHeader)) {
                 $decodedToken = JwtDecoderComponent::decode($this->jwtHeader);
